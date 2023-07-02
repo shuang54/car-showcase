@@ -1,18 +1,19 @@
-import { CarProps } from "@/types";
+import { CarProps, FilterProps } from "@/types";
 
-export async function fetchCars(){
+export async function fetchCars(filters: FilterProps) {
+  const { manufacturer, year, model, limit, fuel } = filters
   const headers = {
     'X-RapidAPI-Key': 'aeceb7d62amsh54957300d70061bp1e7380jsn0dfe695ec2bc',
     'X-RapidAPI-Host': 'cars-by-api-ninjas.p.rapidapi.com'
   }
   const response = await fetch(
-    'https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=a3',
+    `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&limit=${limit}&fuel_type=${fuel}`,
     {
-      headers
+      headers: headers
     }
   )
   const result = await response.json()
-  return result;
+  return result
 }
 export const calculateCarRent = (city_mpg: number, year: number) => {
   const basePricePerDay = 50 // Base rental price per day in dollars
